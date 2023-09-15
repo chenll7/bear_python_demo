@@ -1,0 +1,19 @@
+@echo off
+
+rmdir /s/q package
+
+echo Donwloading dependencies...
+call py -m pip download -d package .
+echo=
+
+echo Packaging...
+call py -m pip wheel -w package .
+echo=
+
+echo Deleting ../../../tool-homemade/bear_demo/package ...
+rmdir /s/q "../../../tool-homemade/bear_demo/package"
+echo=
+
+echo Copying packages to ../../../tool-homemade/bear_demo/package ...
+Xcopy "package" "../../../tool-homemade/bear_demo/package" /E /H /I
+echo=

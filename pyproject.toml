@@ -1,10 +1,16 @@
 [build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+requires = ["setuptools>=61.0", "setuptools_scm[toml]>=6.2"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools_scm]
+write_to = "bear_demo/_version.py"
+
+[tool.setuptools.packages.find]
+include = ["bear_demo"] 
 
 [project]
 name = "bear_demo"
-version = "0.0.1"
+dynamic = ['version']
 authors = [
   { name="Chen Bear", email="chenll7@outlook.com" },
 ]
@@ -15,6 +21,9 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
+]
+dependencies = [
+  "colorama"
 ]
 
 [project.scripts]
