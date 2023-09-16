@@ -3,13 +3,13 @@ requires = ["setuptools>=61.0", "setuptools_scm[toml]>=6.2"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools_scm]
-write_to = "bear_demo/_version.py"
+write_to = "bear_python_demo/_version.py"
 
 [tool.setuptools.packages.find]
-include = ["bear_demo"] 
+include = ["bear_python_demo"] 
 
 [project]
-name = "bear_demo"
+name = "bear_python_demo"
 dynamic = ['version']
 authors = [
   { name="Chen Bear", email="chenll7@outlook.com" },
@@ -27,4 +27,4 @@ dependencies = [
 ]
 
 [project.scripts]
-bear_demo = "bear_demo.main:main"
+bear_python_demo = "bear_python_demo.main:main"
