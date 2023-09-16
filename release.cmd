@@ -12,6 +12,6 @@ echo Copying packages to %USERPROFILE%/tool-homemade/bear_python_demo/package ..
 Xcopy "package" "%USERPROFILE%/tool-homemade/bear_python_demo/package" /E /H /I
 echo=
 
-start "" "%USERPROFILE%/bear-tent/tool-homemade/bear_highway_mgr"
+start "" "%USERPROFILE%/bear-tent/tool-homemade/bear_python_demo"
 
 timeout /nobreak /t 3
