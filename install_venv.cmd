@@ -1,3 +1,3 @@
 @echo off
 
-py -m venv venv
+call py -m venv venv
