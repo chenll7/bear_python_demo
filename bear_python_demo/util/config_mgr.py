@@ -44,9 +44,10 @@ class Config:
         self.config_version: str = config_version
 
         # 获取配置参数
+        self.testing_env: str = os.environ.get('TESTING_ENV', 'production')
         self.app_name: str = (
             bear_python_demo.__name__+'-dev'
-            if config.get('debug_mode', False)
+            if self.testing_env != 'production'
             else bear_python_demo.__name__
         )
         self.app_data_dir_path: str = path.join(
@@ -58,7 +59,6 @@ class Config:
             enabled=check_update.get('enabled', False),
             target_dir_path=check_update.get('target_dir_path', '.')
         )
-        self.testing_env: str = os.environ.get('TESTING_ENV', 'production')
 
     def to_json(self):
         json = vars(self).copy()
