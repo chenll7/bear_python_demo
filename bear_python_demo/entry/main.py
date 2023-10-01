@@ -35,7 +35,7 @@ def main():
     ####################################
     # 主流程
     ####################################
-    console.log('Configuration version is [yellow]{}【/】.'.format(config_version))
+    console.log('Configuration version is [yellow]{}[/].'.format(config_version))
     console.log('[green]Hello bear python demo![/]')
 
     ####################################
