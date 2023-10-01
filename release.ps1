@@ -1,6 +1,6 @@
 & ./package
 
-$parent_folder_path = "${env:USERPROFILE}/tool-homemade/bear_python_demo"
+$parent_folder_path = "${env:USERPROFILE}/bear-warehouse/tool-homemade/bear_python_demo"
 $folder_path = "${parent_folder_path}/package"
 Write-Output "Deleting ${folder_path} ..."
 if (Test-Path $folder_path) {
