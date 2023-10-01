@@ -1,0 +1,5 @@
+version = '1'
+
+[check_update]
+enabled = true
+target_dir_path = '.'
