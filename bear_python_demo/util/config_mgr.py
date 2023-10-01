@@ -6,7 +6,7 @@ from typing import cast
 
 from dotenv import load_dotenv
 
-import bear_python_demo
+import bear_python_demo as main_package
 from bear_python_demo.util.console_mgr import console
 
 REQUIRED_CONFIG_VERSION = '1'
@@ -46,9 +46,9 @@ class Config:
         # 获取配置参数
         self.testing_env: str = os.environ.get('TESTING_ENV', 'production')
         self.app_name: str = (
-            bear_python_demo.__name__+'-dev'
+            main_package.__name__+'-dev'
             if self.testing_env != 'production'
-            else bear_python_demo.__name__
+            else main_package.__name__
         )
         self.app_data_dir_path: str = path.join(
             cast(str, os.getenv('LOCALAPPDATA')),
