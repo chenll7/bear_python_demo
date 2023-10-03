@@ -11,11 +11,9 @@ class Summary:
 
     def print(self):
         console.rule("Summary")
-        console.log(dedent('''\
-            Main process Ends Gracefully: {main_process_ends_gracefully}
-        '''.format(
-            main_process_ends_gracefully='[green]Yes[/]' if self.main_process_ends_gracefully else '[bold red]No[/]'
-        )))
+        console.log(dedent(f'''\
+            Main process Ends Gracefully: {'[green]Yes[/]' if self.main_process_ends_gracefully else '[bold red]No[/]'}
+        '''))
 
 @entry
 def main():
