@@ -5,7 +5,7 @@ from bear_python_demo.util.console_mgr import console
 
 
 def entry(method):
-    def wrap():
+    def wrap(*args, **kwargs):
         ####################################
         # 初始化配置
         ####################################
@@ -24,6 +24,6 @@ def entry(method):
         #########################
         # 执行主函数
         #########################
-        method()
+        method(*args, **kwargs)
 
     return wrap
