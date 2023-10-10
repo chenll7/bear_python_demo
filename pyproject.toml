@@ -23,7 +23,7 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 dependencies = [
-    'rich >= 13.5.3',
+    'colorama >= 0.4.6',
     'python-dotenv >= 1.0.0'
 ]
 

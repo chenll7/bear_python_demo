@@ -7,7 +7,7 @@ from typing import cast
 from dotenv import load_dotenv
 
 import bear_python_demo as main_package
-from bear_python_demo.util.console_mgr import console
+from bear_python_demo.util.log_mgr import logger
 
 REQUIRED_CONFIG_VERSION = '1'
 
@@ -22,7 +22,19 @@ class Config:
         def to_json(self):
             return vars(self).copy()
 
-    def __init__(self):
+    def init_for_check_update(self):
+        # 读取配置
+        with open('config.toml', 'rb') as f:
+            config = tomllib.load(f)
+
+        # 获取配置参数
+        check_update = config.get('check_update', {})
+        self.check_update: Config._CheckUpdate = Config._CheckUpdate(
+            enabled=check_update.get('enabled', False),
+            target_dir_path=check_update.get('target_dir_path', '.')
+        )
+
+    def init(self):
 
         # 读取配置
         with open('config.toml', 'rb') as f:
@@ -35,12 +47,10 @@ class Config:
         config_version = config['version']
         assert isinstance(config_version, str)
         if config_version != REQUIRED_CONFIG_VERSION:
-            raise Exception('Configuration file version should be {} instead of {}'.format(
-                REQUIRED_CONFIG_VERSION, config_version
-            ))
-        console.log('Configuration file version is {}'.format(
-            REQUIRED_CONFIG_VERSION
-        ))
+            raise Exception(
+                f'Configuration file version should be {REQUIRED_CONFIG_VERSION} instead of {config_version}'
+            )
+        logger.info(f'Configuration file version is {REQUIRED_CONFIG_VERSION}')
         self.config_version: str = config_version
 
         # 获取配置参数
@@ -54,27 +64,32 @@ class Config:
             cast(str, os.getenv('LOCALAPPDATA')),
             self.app_name
         )
-        check_update = config.get('check_update', {})
-        self.check_update: Config._CheckUpdate = Config._CheckUpdate(
-            enabled=check_update.get('enabled', False),
-            target_dir_path=check_update.get('target_dir_path', '.')
-        )
 
     def to_json(self):
         json = vars(self).copy()
-        json['check_update'] = cast(
-            Config._CheckUpdate,
-            json['check_update']
-        ).to_json()
+        if 'check_update' in json.keys():
+            json['check_update'] = cast(
+                Config._CheckUpdate,
+                json['check_update']
+            ).to_json()
         return json
 
 
+def init_for_check_update():
+    global _config
+    if _config is None:
+        _config = Config()
+    _config.init_for_check_update()
+
 def init():
     global _config
-    _config = Config()
+    if _config is None:
+        _config = Config()
+    _config.init()
 
 
 def get() -> Config:
+    global _config
     if _config is None:
         raise Exception('Config is not initialized!')
     return _config
