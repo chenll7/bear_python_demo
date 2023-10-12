@@ -6,7 +6,6 @@ from typing import cast
 
 from dotenv import load_dotenv
 
-import bear_python_demo as main_package
 from .log_mgr import logger
 
 REQUIRED_CONFIG_VERSION = '1'
