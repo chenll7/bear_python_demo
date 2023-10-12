@@ -4,9 +4,10 @@ import time
 
 from colorama import Fore
 
-from bear_python_demo.util.entry_decorator import entry
-from bear_python_demo.util import config_mgr
-from bear_python_demo.util.log_mgr import logger, log_rule, C, Color
+import bear_python_demo as main_package
+from bear_python_demo.common_tool.entry_decorator import entry
+from bear_python_demo.common_tool import config_mgr
+from bear_python_demo.common_tool.log_mgr import logger, log_rule, C, Color
 
 
 class Summary:
@@ -26,7 +27,7 @@ class Summary:
         )))
 
 
-@entry
+@entry(main_package=main_package)
 def main():
     ####################################
     # 初始化

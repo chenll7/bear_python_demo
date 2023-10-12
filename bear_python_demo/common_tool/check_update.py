@@ -7,19 +7,20 @@ import sys
 
 from colorama import Fore
 
-import bear_python_demo as main_package
-from bear_python_demo import _version
-from bear_python_demo.util.log_mgr import logger, C, Color
-from bear_python_demo.util import config_mgr
+from .log_mgr import logger, C, Color
+from . import config_mgr
 
 PACKAGE_FOLDER_PATH = 'package'
 
 
-def main():
+def main(
+    *,
+    main_package
+):
     ####################################
     # 初始化
     ####################################
-    current_version_str = _version.version
+    current_version_str = main_package._version.version
     logger.info(f'Current version: {current_version_str}')
     logger.info(f'Package name: {main_package.__name__}')
 

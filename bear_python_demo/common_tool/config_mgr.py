@@ -7,7 +7,7 @@ from typing import cast
 from dotenv import load_dotenv
 
 import bear_python_demo as main_package
-from bear_python_demo.util.log_mgr import logger
+from .log_mgr import logger
 
 REQUIRED_CONFIG_VERSION = '1'
 
@@ -34,7 +34,10 @@ class Config:
             target_dir_path=check_update.get('target_dir_path', '.')
         )
 
-    def init(self):
+    def init(
+        self, *,
+        main_package
+    ):
 
         # 读取配置
         with open('config.toml', 'rb') as f:
@@ -81,11 +84,15 @@ def init_for_check_update():
         _config = Config()
     _config.init_for_check_update()
 
-def init():
+
+def init(
+    *,
+    main_package
+):
     global _config
     if _config is None:
         _config = Config()
-    _config.init()
+    _config.init(main_package=main_package)
 
 
 def get() -> Config:
