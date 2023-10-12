@@ -1,13 +1,19 @@
 import json
 
+import colorama
+
 from bear_python_demo.util import config_mgr
 from bear_python_demo.util import check_update
-
 from bear_python_demo.util.log_mgr import logger, log_rule
 
 
 def entry(method):
     def wrap(*args, **kwargs):
+        ####################################
+        # 初始化
+        ####################################
+        colorama.init()
+
         ####################################
         # 初始化配置，仅检查更新部分
         ####################################

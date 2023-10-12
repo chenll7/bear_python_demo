@@ -8,6 +8,12 @@ if (Test-Path $folder_path) {
 }
 Write-Output `n
 
+New-Item -ItemType Directory -Path "$folder_path"
+
+Write-Output "Copying dependencies to ${parent_folder_path} ..."
+copy-item "dependency/*" "$folder_path" -force -recurse
+Write-Output `n
+
 Write-Output "Copying packages to ${parent_folder_path} ..."
 copy-item "package" "${parent_folder_path}" -force -recurse
 Write-Output `n

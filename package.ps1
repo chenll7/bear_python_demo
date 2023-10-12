@@ -9,18 +9,18 @@ if (Test-Path $folder_path) {
 }
 
 Write-Output 'Donwloading dependencies...'
-$job1 = Start-Job -Init ([ScriptBlock]::Create("Set-Location '$pwd'")) -ScriptBlock {
-    & py -m pip download -d package --disable-pip-version-check .
+# $job1 = Start-Job -Init ([ScriptBlock]::Create("Set-Location '$pwd'")) -ScriptBlock {
+    & "venv/Scripts/python" -m pip download -d package --disable-pip-version-check .
     Write-Output `n
-}
+# }
 Write-Output 'Packaging...'
-$job2 = Start-Job -Init ([ScriptBlock]::Create("Set-Location '$pwd'")) -ScriptBlock {
-    & py -m pip wheel -w package --disable-pip-version-check .
+# $job2 = Start-Job -Init ([ScriptBlock]::Create("Set-Location '$pwd'")) -ScriptBlock {
+    & "venv/Scripts/python" -m pip wheel -w package --disable-pip-version-check .
     Write-Output `n
-}
-Wait-Job $job1
-Wait-Job $job2
-Receive-Job -Job $job1
-Receive-Job -Job $job2
-remove-job $job1
-remove-job $job2
+# }
+# Wait-Job $job1
+# Wait-Job $job2
+# Receive-Job -Job $job1
+# Receive-Job -Job $job2
+# remove-job $job1
+# remove-job $job2

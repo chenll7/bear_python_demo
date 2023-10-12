@@ -4,6 +4,6 @@ config.toml
 /dist/
 _version.py
 *.egg-info
-/package
-/build
-/log
+/package/
+/build/
+/log/
