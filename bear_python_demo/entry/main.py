@@ -12,10 +12,12 @@ from bear_python_demo.common_tool.log_mgr import logger, log_rule, C, Color
 
 class Summary:
     def __init__(self):
+        self.start_time: float = float('nan')
         self.elapsed_time: float = float('nan')
         self.main_process_ends_gracefully: bool = False
 
     def print(self):
+        self.elapsed_time = time.time() - self.start_time
         log_rule("Summary")
         logger.info(C((
             f'\nElapsed time: {self.elapsed_time}s\n',
@@ -34,8 +36,8 @@ def main():
     ####################################
     log_rule('Main')
     summary = Summary()
+    summary.start_time = time.time()
     atexit.register(summary.print)
-    start_time = time.time()
 
     ####################################
     # 读取配置
@@ -57,7 +59,6 @@ def main():
     ####################################
     # 结束
     ####################################
-    summary.elapsed_time = time.time() - start_time
     summary.main_process_ends_gracefully = True
 
 
