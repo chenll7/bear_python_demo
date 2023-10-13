@@ -1,11 +1,9 @@
-from textwrap import dedent
 import atexit
 import time
 
 from colorama import Fore
 
-import bear_python_demo as main_package
-from bear_python_demo.common_tool.entry_decorator import entry
+from bear_python_demo.helper.entry_decorator import entry
 from bear_python_demo.common_tool import config_mgr
 from bear_python_demo.common_tool.log_mgr import logger, log_rule, C, Color
 
@@ -29,7 +27,7 @@ class Summary:
         )))
 
 
-@entry(main_package=main_package)
+@entry()
 def main():
     ####################################
     # 初始化

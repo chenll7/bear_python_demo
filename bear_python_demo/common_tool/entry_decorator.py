@@ -7,7 +7,11 @@ from . import check_update
 from .log_mgr import logger, log_rule
 
 
-def entry(*, main_package):
+def entry(
+    *,
+    main_package,
+    config_strategy: config_mgr.ConfigStrategy
+):
     def deco(method):
         def wrap(*args, **kwargs):
             ####################################
@@ -19,8 +23,9 @@ def entry(*, main_package):
             # 初始化配置，仅检查更新部分
             ####################################
             log_rule('Init Configuration For Check Update')
-            config_mgr.init_for_check_update()
+            config_mgr.build(strategy=config_strategy)
             config = config_mgr.get()
+            config.init_for_check_update()
             logger.info(
                 f'\nConfiguration:\n{json.dumps(config.to_json(),indent = 2)}\n'
             )
@@ -36,7 +41,7 @@ def entry(*, main_package):
             # 初始化配置
             ####################################
             log_rule('Init Configuration')
-            config_mgr.init(
+            config.init(
                 main_package=main_package
             )
             config = config_mgr.get()
