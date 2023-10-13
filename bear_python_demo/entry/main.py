@@ -1,11 +1,13 @@
 import atexit
 import time
+from typing import cast
 
 from colorama import Fore
 
 from bear_python_demo.helper.entry_decorator import entry
 from bear_python_demo.common_tool import config_mgr
 from bear_python_demo.common_tool.log_mgr import logger, log_rule, C, Color
+from bear_python_demo.helper.entry_decorator import MyConfig
 
 
 class Summary:
@@ -40,15 +42,15 @@ def main():
     ####################################
     # 读取配置
     ####################################
-    config = config_mgr.get()
-    config_version = config.config_version
+    config: MyConfig = cast(MyConfig, config_mgr.get())
+    current_time = config.current_time
 
     ####################################
     # 主流程
     ####################################
     logger.info(C((
-        f'Configuration version is ',
-        Color(Fore.YELLOW), config_version, Color(Fore.RESET), '.'
+        f'Current time is ',
+        Color(Fore.YELLOW), str(current_time), Color(Fore.RESET), '.'
     )))
     logger.info(C((
         Color(Fore.GREEN), 'Hello bear python demo!', Color(Fore.RESET)

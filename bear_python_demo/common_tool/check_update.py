@@ -85,7 +85,3 @@ def main(
             f' .\nPlease run install.cmd to reinstall the application.\n'
         )))
         sys.exit()
-
-
-if __name__ == '__main__':
-    main()

@@ -1,3 +1,4 @@
+from abc import ABC, abstractmethod
 import os
 from os import path
 from typing import Optional, Callable
@@ -11,18 +12,7 @@ from .log_mgr import logger
 REQUIRED_CONFIG_VERSION = '1'
 
 
-class ConfigStrategy:
-    def __init__(
-        self, *,
-        init_additional,
-        to_json_additional,
-    ):
-        self.init_additional: Callable[['Config', dict], None] = \
-            init_additional
-        self.to_json_additional: Callable[[dict], None] = to_json_additional
-
-
-class Config:
+class Config(ABC):
 
     class _CheckUpdate:
         def __init__(self, *, enabled, target_dir_path) -> None:
@@ -31,15 +21,6 @@ class Config:
 
         def to_json(self):
             return vars(self).copy()
-
-    class _Meta:
-        def __init__(self, *, strategy):
-            self.strategy: ConfigStrategy | None = strategy
-
-    def __init__(self, *, strategy=None):
-        self._meta: Config._Meta = Config._Meta(
-            strategy=strategy
-        )
 
     def init_for_check_update(self):
         # 读取配置
@@ -52,6 +33,10 @@ class Config:
             enabled=check_update.get('enabled', False),
             target_dir_path=check_update.get('target_dir_path', '.')
         )
+
+    @abstractmethod
+    def init_additional(self, config_raw):
+        pass
 
     def init(
         self, *,
@@ -86,19 +71,20 @@ class Config:
             cast(str, os.getenv('LOCALAPPDATA')),
             self.app_name
         )
-        if self._meta.strategy and self._meta.strategy.init_additional:
-            self._meta.strategy.init_additional(self, config_raw)
+        self.init_additional(config_raw)
+
+    @abstractmethod
+    def to_json_additional(self, json):
+        pass
 
     def to_json(self):
         json = vars(self).copy()
-        del json["_meta"]
         if 'check_update' in json.keys():
             json['check_update'] = cast(
                 Config._CheckUpdate,
                 json['check_update']
             ).to_json()
-        if self._meta.strategy and self._meta.strategy.to_json_additional:
-            self._meta.strategy.to_json_additional(json)
+        self.to_json_additional(json)
         return json
 
 
@@ -126,9 +112,9 @@ def get() -> Config:
     return _config
 
 
-def build(*args, **kwargs):
+def create(config: Config):
     global _config
-    _config = Config(*args, **kwargs)
+    _config = config
 
 
 _config: Optional[Config] = None

@@ -10,7 +10,7 @@ from .log_mgr import logger, log_rule
 def entry(
     *,
     main_package,
-    config_strategy: config_mgr.ConfigStrategy
+    custom_config
 ):
     def deco(method):
         def wrap(*args, **kwargs):
@@ -23,7 +23,7 @@ def entry(
             # 初始化配置，仅检查更新部分
             ####################################
             log_rule('Init Configuration For Check Update')
-            config_mgr.build(strategy=config_strategy)
+            config_mgr.create(custom_config)
             config = config_mgr.get()
             config.init_for_check_update()
             logger.info(
