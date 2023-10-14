@@ -5,9 +5,8 @@ from typing import cast
 from colorama import Fore
 
 from bear_python_demo.helper.entry_decorator import entry
-from bear_python_demo.common_tool import config_mgr
+from bear_python_demo.helper.config_mgr import config
 from bear_python_demo.common_tool.log_mgr import logger, log_rule, C, Color
-from bear_python_demo.helper.entry_decorator import MyConfig
 
 
 class Summary:
@@ -42,7 +41,7 @@ def main():
     ####################################
     # 读取配置
     ####################################
-    config: MyConfig = cast(MyConfig, config_mgr.get())
+    print(config.to_json())
     current_time = config.current_time
 
     ####################################

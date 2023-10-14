@@ -8,14 +8,14 @@ import sys
 from colorama import Fore
 
 from .log_mgr import logger, C, Color
-from . import config_mgr
 
 PACKAGE_FOLDER_PATH = 'package'
 
 
 def main(
     *,
-    main_package
+    main_package,
+    custom_config
 ):
     ####################################
     # 初始化
@@ -27,8 +27,7 @@ def main(
     ####################################
     # 读取配置
     ####################################
-    config = config_mgr.get()
-    target_dir_path = config.check_update.target_dir_path
+    target_dir_path = custom_config.check_update.target_dir_path
 
     ####################################
     # 找包

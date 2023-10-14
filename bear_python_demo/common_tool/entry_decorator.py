@@ -2,15 +2,15 @@ import json
 
 import colorama
 
-from . import config_mgr
 from . import check_update
 from .log_mgr import logger, log_rule
+from .abstract_config import AbstractConfig
 
 
 def entry(
     *,
     main_package,
-    custom_config
+    custom_config: AbstractConfig
 ):
     def deco(method):
         def wrap(*args, **kwargs):
@@ -23,30 +23,30 @@ def entry(
             # 初始化配置，仅检查更新部分
             ####################################
             log_rule('Init Configuration For Check Update')
-            config_mgr.create(custom_config)
-            config = config_mgr.get()
-            config.init_for_check_update()
+            custom_config.init_for_check_update()
             logger.info(
-                f'\nConfiguration:\n{json.dumps(config.to_json(),indent = 2)}\n'
+                f'\nConfiguration:\n{json.dumps(custom_config.to_json(),indent = 2)}\n'
             )
 
             ####################################
             # 检查更新
             ####################################
             log_rule('Check Update')
-            if config.check_update.enabled:
-                check_update.main(main_package=main_package)
+            if custom_config.check_update.enabled:
+                check_update.main(
+                    main_package=main_package,
+                    custom_config=custom_config
+                )
 
             ####################################
             # 初始化配置
             ####################################
             log_rule('Init Configuration')
-            config.init(
+            custom_config.init(
                 main_package=main_package
             )
-            config = config_mgr.get()
             logger.info(
-                f'\nConfiguration:\n{json.dumps(config.to_json(),indent = 2)}\n'
+                f'\nConfiguration:\n{json.dumps(custom_config.to_json(), indent = 2)}\n'
             )
 
             #########################

@@ -1,7 +1,6 @@
 from abc import ABC, abstractmethod
 import os
 from os import path
-from typing import Optional, Callable
 import tomllib
 from typing import cast
 
@@ -9,10 +8,8 @@ from dotenv import load_dotenv
 
 from .log_mgr import logger
 
-REQUIRED_CONFIG_VERSION = '1'
-
-
-class Config(ABC):
+class AbstractConfig(ABC):
+    REQUIRED_CONFIG_VERSION: str
 
     class _CheckUpdate:
         def __init__(self, *, enabled, target_dir_path) -> None:
@@ -29,7 +26,7 @@ class Config(ABC):
 
         # 获取配置参数
         check_update = config_raw.get('check_update', {})
-        self.check_update: Config._CheckUpdate = Config._CheckUpdate(
+        self.check_update: AbstractConfig._CheckUpdate = AbstractConfig._CheckUpdate(
             enabled=check_update.get('enabled', False),
             target_dir_path=check_update.get('target_dir_path', '.')
         )
@@ -53,11 +50,11 @@ class Config(ABC):
         # 校验版本
         config_version = config_raw['version']
         assert isinstance(config_version, str)
-        if config_version != REQUIRED_CONFIG_VERSION:
+        if config_version != self.REQUIRED_CONFIG_VERSION:
             raise Exception(
-                f'Configuration file version should be {REQUIRED_CONFIG_VERSION} instead of {config_version}'
+                f'Configuration file version should be {self.REQUIRED_CONFIG_VERSION} instead of {config_version}'
             )
-        logger.info(f'Configuration file version is {REQUIRED_CONFIG_VERSION}')
+        logger.info(f'Configuration file version is {self.REQUIRED_CONFIG_VERSION}')
         self.config_version: str = config_version
 
         # 获取配置参数
@@ -81,40 +78,8 @@ class Config(ABC):
         json = vars(self).copy()
         if 'check_update' in json.keys():
             json['check_update'] = cast(
-                Config._CheckUpdate,
+                AbstractConfig._CheckUpdate,
                 json['check_update']
             ).to_json()
         self.to_json_additional(json)
         return json
-
-
-# def init_for_check_update():
-#     global _config
-#     if _config is None:
-#         raise Exception('Config is not initialized!')
-#     _config.init_for_check_update()
-
-
-# def init(
-#     *,
-#     main_package
-# ):
-#     global _config
-#     if _config is None:
-#         raise Exception('Config is not initialized!')
-#     _config.init(main_package=main_package)
-
-
-def get() -> Config:
-    global _config
-    if _config is None:
-        raise Exception('Config is not initialized!')
-    return _config
-
-
-def create(config: Config):
-    global _config
-    _config = config
-
-
-_config: Optional[Config] = None
