@@ -1,1 +1,0 @@
-git subtree push --prefix=bear_python_demo/common_tool common_tool master
