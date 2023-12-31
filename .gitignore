@@ -1,6 +1,6 @@
 venv/
 __pycache__/
-config.toml
+/config.toml
 /dist/
 _version.py
 *.egg-info
