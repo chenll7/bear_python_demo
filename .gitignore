@@ -8,3 +8,4 @@ _version.py
 /build/
 /log/
 /dependency/
+/release/

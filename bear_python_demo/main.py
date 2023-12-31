@@ -1,12 +1,11 @@
 import atexit
 import time
-from typing import cast
 
 from colorama import Fore
 
 from bear_python_demo.helper.entry_decorator import entry
 from bear_python_demo.helper.config_mgr import config
-from bear_python_demo.common_tool.log_mgr import logger, log_rule, C, Color
+from common_tool.log_mgr import logger, log_rule, C, Color
 
 
 class Summary:

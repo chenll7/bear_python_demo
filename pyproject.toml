@@ -7,7 +7,8 @@ write_to = "bear_python_demo/_version.py"
 local_scheme = "node-and-timestamp"
 
 [tool.setuptools.packages.find]
-include = ["bear_python_demo"] 
+include = ["bear_python_demo", "common_tool"]
+exclude = ["*/__pycache__/*"]
 
 [project]
 name = "bear_python_demo"
@@ -24,6 +25,7 @@ classifiers = [
   "Operating System :: OS Independent",
 ]
 dependencies = [
+  'packaging >= 23.2',
   'colorama >= 0.4.6',
   'python-dotenv >= 1.0.0'
 ]

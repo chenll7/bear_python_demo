@@ -1,5 +1,5 @@
 import bear_python_demo as main_package
-from bear_python_demo.common_tool.entry_decorator import entry as base_entry
+from common_tool.entry_decorator import entry as base_entry
 from bear_python_demo.helper.config_mgr import config
 
 def entry():

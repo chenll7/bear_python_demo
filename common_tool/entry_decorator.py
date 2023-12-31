@@ -2,9 +2,9 @@ import json
 
 import colorama
 
-from . import check_update
-from .log_mgr import logger, log_rule
-from .abstract_config import AbstractConfig
+from common_tool import check_update
+from common_tool.log_mgr import logger, log_rule
+from common_tool.abstract_config import AbstractConfig
 
 
 def entry(

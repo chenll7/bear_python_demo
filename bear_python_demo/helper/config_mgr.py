@@ -1,7 +1,7 @@
 from typing import cast
 from datetime import datetime
 
-from bear_python_demo.common_tool.abstract_config import AbstractConfig
+from common_tool.abstract_config import AbstractConfig
 
 class Config(AbstractConfig):
 
