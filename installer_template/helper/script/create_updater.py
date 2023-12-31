@@ -19,6 +19,7 @@ SUFFIX = {
 
 UPDATING_SCOPE = {
     Mode.FOR_PROGRAM: [
+        r"\.[\\/]helper(?:[\\/].+)?",
         r"\.[\\/]package(?:[\\/].+)?",
         r"\.[\\/][^\\/]+\.cmd(?:[\\/].+)?",
     ],
