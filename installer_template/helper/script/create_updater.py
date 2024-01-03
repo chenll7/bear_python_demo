@@ -124,11 +124,6 @@ def main(mode):
             for item_name in os.listdir(dir_path):
                 item_path = path.join(dir_path, item_name)
                 item_rel_path = path.join(dir_rel_path, item_name)
-                if not any(
-                    UPDATING_SCOPE_PATTERN.match(item_rel_path)
-                    for UPDATING_SCOPE_PATTERN in updating_scope_pattern_list
-                ):
-                    continue
                 if path.isfile(item_path):
                     to_add_stack.append(item_rel_path)
                 elif path.isdir(item_path):
@@ -137,11 +132,18 @@ def main(mode):
             item_rel_path = to_add_stack.popleft()
             src_item_path = path.join(SRC_ROOT_DIR_PATH, item_rel_path)
             tgt_item_path = path.join(tgt_root_dir_name, CONTENT_DIR_REL_PATH, APP_NAME, item_rel_path)
-            print(src_item_path)
-            z.write(
-                src_item_path,
-                tgt_item_path
-            )
+            if not any(
+                UPDATING_SCOPE_PATTERN.match(item_rel_path)
+                for UPDATING_SCOPE_PATTERN in updating_scope_pattern_list
+            ):
+                print(f'Not pick: {item_rel_path}')
+                continue
+            else:
+                print(f'Pick: {item_rel_path}')
+                z.write(
+                    src_item_path,
+                    tgt_item_path
+                )
 
 
 if __name__ == "__main__":
