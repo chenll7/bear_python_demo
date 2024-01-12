@@ -1,4 +1,5 @@
 import json
+from typing import Callable, Any
 
 import colorama
 
@@ -10,7 +11,8 @@ from common_tool.abstract_config import AbstractConfig
 def entry(
     *,
     main_package,
-    custom_config: AbstractConfig
+    custom_config: AbstractConfig,
+    check_update_exit_callback: None|Callable[[],Any] = None
 ):
     def deco(method):
         def wrap(*args, **kwargs):
@@ -35,7 +37,8 @@ def entry(
             if custom_config.check_update.enabled:
                 check_update.main(
                     main_package=main_package,
-                    custom_config=custom_config
+                    custom_config=custom_config,
+                    exit_callback=check_update_exit_callback
                 )
 
             ####################################

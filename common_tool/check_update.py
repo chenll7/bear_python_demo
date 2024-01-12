@@ -6,6 +6,7 @@ import importlib.util
 import sys
 import re
 from packaging import version
+from typing import Callable, Any
 
 from colorama import Fore
 
@@ -14,7 +15,7 @@ from common_tool.log_mgr import logger, C, Color
 PACKAGE_FOLDER_PATH = "package"
 
 
-def main(*, main_package, custom_config):
+def main(*, main_package, custom_config, exit_callback:None|Callable[[],Any]):
     ####################################
     # 初始化
     ####################################
@@ -95,4 +96,6 @@ def main(*, main_package, custom_config):
                 )
             )
         )
+        if exit_callback:
+            exit_callback()
         sys.exit()
