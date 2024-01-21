@@ -3,10 +3,8 @@ import zipfile
 import tempfile
 from os import path
 import importlib.util
-import sys
 import re
 from packaging import version
-from typing import Callable, Any
 
 from colorama import Fore
 
@@ -15,7 +13,12 @@ from common_tool.log_mgr import logger, C, Color
 PACKAGE_FOLDER_PATH = "package"
 
 
-def main(*, main_package, custom_config, exit_callback:None|Callable[[],Any]):
+def main(*, main_package, custom_config) -> bool:
+    """Checking update main flow.
+
+    Returns:
+        bool: Whether need to update.
+    """
     ####################################
     # 初始化
     ####################################
@@ -77,6 +80,7 @@ def main(*, main_package, custom_config, exit_callback:None|Callable[[],Any]):
 
     if local_wheel_version_str == current_version_str:
         logger.info(C((Color(Fore.GREEN), "No update!", Color(Fore.RESET))))
+        return False
     else:
         logger.info(
             C(
@@ -96,6 +100,4 @@ def main(*, main_package, custom_config, exit_callback:None|Callable[[],Any]):
                 )
             )
         )
-        if exit_callback:
-            exit_callback()
-        sys.exit()
+        return True
