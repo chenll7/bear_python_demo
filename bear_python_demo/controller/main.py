@@ -31,6 +31,12 @@ class Main(AbstractController):
 
     def _main(self):
         ####################################
+        # 初始化
+        ####################################
+        log_rule('Starting')
+        self.summary.start_time = time.time()
+
+        ####################################
         # 读取配置
         ####################################
         current_time = config.current_time
@@ -49,9 +55,6 @@ class Main(AbstractController):
 
     def main(self):
         try:
-            log_rule('Starting')
-            self.summary.start_time = time.time()
-
             self._main()
         except Exception as err:
             raise err
