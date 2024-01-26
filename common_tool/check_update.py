@@ -13,12 +13,7 @@ from common_tool.log_mgr import logger, C, Color
 PACKAGE_FOLDER_PATH = "package"
 
 
-def main(*, main_package, custom_config) -> bool:
-    """Checking update main flow.
-
-    Returns:
-        bool: Whether need to update.
-    """
+def main(*, main_package, custom_config) -> None:
     ####################################
     # 初始化
     ####################################
@@ -80,7 +75,6 @@ def main(*, main_package, custom_config) -> bool:
 
     if local_wheel_version_str == current_version_str:
         logger.info(C((Color(Fore.GREEN), "No update!", Color(Fore.RESET))))
-        return False
     else:
         logger.info(
             C(
@@ -100,4 +94,4 @@ def main(*, main_package, custom_config) -> bool:
                 )
             )
         )
-        return True
+        raise Exception('Need to update!')
