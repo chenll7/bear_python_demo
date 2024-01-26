@@ -1,3 +1,5 @@
+from argparse import ArgumentParser
+
 import bear_python_demo as main_package
 from bear_python_demo.helper.config_mgr import config
 from common_tool.log_mgr import logger, log_rule, C, Color
@@ -12,7 +14,8 @@ class Entry(AbstractEntry):
     def custom_config(self):
         return config
     
-    def add_parses(self, subparsers) -> None:
+    def add_parses(self, root_parser: ArgumentParser) -> None:
+        subparsers = root_parser.add_subparsers(dest='subparser_name', help='Sub-command.')
         main_parser = subparsers.add_parser('main', help='Main.')
 
 def main():

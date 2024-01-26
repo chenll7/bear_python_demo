@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 import json
 from types import ModuleType
-import argparse
+from argparse import ArgumentParser
 import importlib
 import subprocess
 import shlex
@@ -28,7 +28,7 @@ class AbstractEntry(ABC):
         pass
 
     @abstractmethod
-    def add_parses(self, subparsers) -> None:
+    def add_parses(self, subparsers: ArgumentParser) -> None:
         pass
 
     def exit_callback(self, err=None):
@@ -72,9 +72,8 @@ class AbstractEntry(ABC):
         ####################################
         # 执行Controller
         ####################################
-        root_parser = argparse.ArgumentParser(prog='PROGRAM')
-        subparsers = root_parser.add_subparsers(dest='subparser_name', help='Sub-command.')
-        self.add_parses(subparsers)
+        root_parser = ArgumentParser(prog='PROGRAM')
+        self.add_parses(root_parser)
         args = root_parser.parse_args()
         if args.subparser_name == None:
             logger.info('Sub-command needed!')
