@@ -16,8 +16,10 @@ from common_tool.abstract_controller import AbstractController, MyControllerErro
 from common_tool.abstract_arg_mgr import AbstractArgMgr, MyArgumentParserError
 from common_tool.abstract_env_mgr import AbstractEnvMgr
 
+
 def run(cmd, *args, **kwargs):
     subprocess.run(shlex.split(cmd), *args, **kwargs)
+
 
 class AbstractEntry(ABC):
     @property
@@ -43,7 +45,7 @@ class AbstractEntry(ABC):
     def exit_callback(self, err=None):
         if err and type(err) not in [MyArgumentParserError, MyControllerError]:
             logger.error(traceback.format_exc())
-        run('pause', shell = True) 
+        run("pause", shell=True)
 
     def _main(self):
         ####################################A
@@ -96,7 +98,9 @@ class AbstractEntry(ABC):
         ####################################
         # 执行Controller
         ####################################
-        m = importlib.import_module(f'{self.main_package.__name__}.controller.{args.subparser_name}')
+        m = importlib.import_module(
+            f"{self.main_package.__name__}.controller.{args.subparser_name}"
+        )
         assert issubclass(m.Main, AbstractController)
         m.Main().main()
 

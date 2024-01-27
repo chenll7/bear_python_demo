@@ -1,6 +1,8 @@
 from abc import ABC, abstractmethod
 
-class MyControllerError(Exception): pass
+
+class MyControllerError(Exception):
+    pass
 
 
 class AbstractController(ABC):

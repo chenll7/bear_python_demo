@@ -3,15 +3,18 @@ from argparse import ArgumentParser
 
 from common_tool.log_mgr import logger
 
-class MyArgumentParserError(Exception): pass
+
+class MyArgumentParserError(Exception):
+    pass
+
 
 class MyArgumentParser(ArgumentParser):
     def error(self, message):
-        logger.info(f'\n{self.format_help()}')
+        logger.info(f"\n{self.format_help()}")
         raise MyArgumentParserError(message)
 
-class AbstractArgMgr(ABC):
 
+class AbstractArgMgr(ABC):
     def __init__(self):
         pass
 
@@ -20,9 +23,9 @@ class AbstractArgMgr(ABC):
         pass
 
     def init(self):
-        root_parser = MyArgumentParser(prog='PROGRAM')
+        root_parser = MyArgumentParser(prog="PROGRAM")
         self.add_parses(root_parser)
         self.args = root_parser.parse_args()
         if self.args.subparser_name == None:
             root_parser.print_help()
-            raise Exception('Sub-command needed!')
+            raise Exception("Sub-command needed!")

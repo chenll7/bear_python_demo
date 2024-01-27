@@ -94,4 +94,4 @@ def main(*, main_package, custom_config) -> None:
                 )
             )
         )
-        raise Exception('Need to update!')
+        raise Exception("Need to update!")

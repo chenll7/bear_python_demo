@@ -10,6 +10,7 @@ from common_tool.abstract_config import AbstractConfig
 from common_tool.abstract_arg_mgr import AbstractArgMgr
 from common_tool.abstract_env_mgr import AbstractEnvMgr
 
+
 class Entry(AbstractEntry):
     @property
     def main_package(self):
@@ -18,17 +19,19 @@ class Entry(AbstractEntry):
     @property
     def custom_config(self) -> AbstractConfig:
         return config
-    
+
     @property
     def custom_arg_mgr(self) -> AbstractArgMgr:
         return arg_mgr
-    
+
     @property
     def custom_env_mgr(self) -> AbstractEnvMgr:
         return env_mgr
-    
+
+
 def main():
     Entry().main()
+
 
 if __name__ == "__main__":
     main()

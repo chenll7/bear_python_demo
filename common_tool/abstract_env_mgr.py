@@ -17,7 +17,6 @@ class AbstractEnvMgr(ABC):
         pass
 
     def init(self, main_package):
-
         # 读取环境变量注入配置
         load_dotenv()
 
