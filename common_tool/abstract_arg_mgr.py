@@ -14,7 +14,7 @@ class AbstractArgMgr(ABC):
         pass
 
     def init(self):
-        root_parser = ArgumentParser(prog='PROGRAM')
+        root_parser = ArgumentParser(prog='PROGRAM', exit_on_error=False)
         self.add_parses(root_parser)
         self.args = root_parser.parse_args()
         if self.args.subparser_name == None:

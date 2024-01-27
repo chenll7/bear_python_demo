@@ -5,6 +5,7 @@ from argparse import ArgumentParser
 import importlib
 import subprocess
 import shlex
+import traceback
 
 import colorama
 
@@ -40,6 +41,8 @@ class AbstractEntry(ABC):
         pass
 
     def exit_callback(self, err=None):
+        if err:
+            logger.error(traceback.format_exc())
         run('pause', shell = True)
 
     def _main(self):
