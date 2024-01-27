@@ -10,7 +10,7 @@ class MyArgumentParserError(Exception):
 
 class MyArgumentParser(ArgumentParser):
     def error(self, message):
-        logger.info(f"\n{self.format_help()}")
+        logger.info(f"\n{self.format_help()}\n{message}")
         raise MyArgumentParserError(message)
 
 
