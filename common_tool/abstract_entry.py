@@ -1,19 +1,19 @@
 from abc import ABC, abstractmethod
 import json
 from types import ModuleType
-from argparse import ArgumentParser
 import importlib
 import subprocess
 import shlex
 import traceback
+import atexit
 
 import colorama
 
 from common_tool.check_update import main as check_update
 from common_tool.log_mgr import logger, log_rule
 from common_tool.abstract_config import AbstractConfig
-from common_tool.abstract_controller import AbstractController
-from common_tool.abstract_arg_mgr import AbstractArgMgr
+from common_tool.abstract_controller import AbstractController, MyControllerError
+from common_tool.abstract_arg_mgr import AbstractArgMgr, MyArgumentParserError
 from common_tool.abstract_env_mgr import AbstractEnvMgr
 
 def run(cmd, *args, **kwargs):
@@ -41,9 +41,9 @@ class AbstractEntry(ABC):
         pass
 
     def exit_callback(self, err=None):
-        if err:
+        if err and type(err) not in [MyArgumentParserError, MyControllerError]:
             logger.error(traceback.format_exc())
-        run('pause', shell = True)
+        run('pause', shell = True) 
 
     def _main(self):
         ####################################A
@@ -74,7 +74,7 @@ class AbstractEntry(ABC):
         ####################################
         # 初始化配置
         ####################################
-        log_rule("Init Configuration")
+        log_rule("Initializing Configuration")
         self.custom_config.init(main_package=self.main_package)
         logger.info(
             f"\nConfiguration:\n{json.dumps(self.custom_config.to_json(), indent = 2)}\n"
@@ -83,14 +83,19 @@ class AbstractEntry(ABC):
         ####################################
         # 初始化环境信息
         ####################################
-        log_rule("Init Env Informationg")
+        log_rule("Initializing Environment Information")
         self.custom_env_mgr.init(main_package=self.main_package)
 
         ####################################
         # 执行Controller
         ####################################
+        log_rule("Initializing Argument Parser")
         self.custom_arg_mgr.init()
         args = self.custom_arg_mgr.args
+
+        ####################################
+        # 执行Controller
+        ####################################
         m = importlib.import_module(f'{self.main_package.__name__}.controller.{args.subparser_name}')
         assert issubclass(m.Main, AbstractController)
         m.Main().main()

@@ -1,4 +1,5 @@
 import time
+import traceback
 
 from colorama import Fore
 
@@ -6,7 +7,7 @@ from bear_python_demo.helper.config import config
 from bear_python_demo.helper.env_mgr import env_mgr
 from bear_python_demo.helper.arg_mgr import arg_mgr
 from common_tool.log_mgr import logger, log_rule, C, Color
-from common_tool.abstract_controller import AbstractController
+from common_tool.abstract_controller import AbstractController, MyControllerError
 
 class Summary:
     def __init__(self):
@@ -69,7 +70,8 @@ class Main(AbstractController):
         try:
             self._main()
         except Exception as err:
-            raise err
+            logger.error(traceback.format_exc())
+            raise MyControllerError(err)
         else:
             self.summary.main_process_ends_gracefully = True
         finally:
