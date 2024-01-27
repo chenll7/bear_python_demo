@@ -9,7 +9,7 @@ from zipfile import ZipFile
 RELEASE_FOLDER_PATH = "release"
 APP_NAME = 'bear_python_demo'
 UPDATER_NAME = 'bear_python_demo_updater_for_program'
-PUBLISH_PATH = path.expanduser("~/bear-warehouse/tool-homemade/")
+PUBLISH_PATH = path.expanduser("~/bear_base/active/tool-homemade/")
 
 
 def run(cmd):
