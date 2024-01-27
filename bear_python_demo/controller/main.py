@@ -37,7 +37,6 @@ class Summary:
 class Main(AbstractController):
     def __init__(self):
         self.summary = Summary()
-        self.summary.start_time = time.time()
 
     def _main(self):
         ####################################
