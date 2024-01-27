@@ -2,7 +2,9 @@ import time
 
 from colorama import Fore
 
-from bear_python_demo.helper.config_mgr import config
+from bear_python_demo.helper.config import config
+from bear_python_demo.helper.env_mgr import env_mgr
+from bear_python_demo.helper.arg_mgr import arg_mgr
 from common_tool.log_mgr import logger, log_rule, C, Color
 from common_tool.abstract_controller import AbstractController
 
@@ -39,15 +41,25 @@ class Main(AbstractController):
         ####################################
         # 读取配置
         ####################################
-        current_time = config.current_time
+        init_time = env_mgr.init_time
+        config_version = config.config_version
+        subparser_name = arg_mgr.args.subparser_name
 
         ####################################
         # 主流程
         ####################################
         log_rule('Main')
         logger.info(C((
-            f'Current time is ',
-            Color(Fore.YELLOW), str(current_time), Color(Fore.RESET), '.'
+            f'The init time is ',
+            Color(Fore.YELLOW), str(init_time), Color(Fore.RESET), '.'
+        )))
+        logger.info(C((
+            f'The config version is ',
+            Color(Fore.YELLOW), config_version, Color(Fore.RESET), '.'
+        )))
+        logger.info(C((
+            f'The controller name is ',
+            Color(Fore.YELLOW), str(subparser_name), Color(Fore.RESET), '.'
         )))
         logger.info(C((
             Color(Fore.GREEN), 'Hello bear python demo!', Color(Fore.RESET)

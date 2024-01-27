@@ -12,6 +12,8 @@ from common_tool.check_update import main as check_update
 from common_tool.log_mgr import logger, log_rule
 from common_tool.abstract_config import AbstractConfig
 from common_tool.abstract_controller import AbstractController
+from common_tool.abstract_arg_mgr import AbstractArgMgr
+from common_tool.abstract_env_mgr import AbstractEnvMgr
 
 def run(cmd, *args, **kwargs):
     subprocess.run(shlex.split(cmd), *args, **kwargs)
@@ -27,8 +29,14 @@ class AbstractEntry(ABC):
     def custom_config(self) -> AbstractConfig:
         pass
 
+    @property
     @abstractmethod
-    def add_parses(self, subparsers: ArgumentParser) -> None:
+    def custom_arg_mgr(self) -> AbstractArgMgr:
+        pass
+
+    @property
+    @abstractmethod
+    def custom_env_mgr(self) -> AbstractEnvMgr:
         pass
 
     def exit_callback(self, err=None):
@@ -70,15 +78,16 @@ class AbstractEntry(ABC):
         )
 
         ####################################
+        # 初始化环境信息
+        ####################################
+        log_rule("Init Env Informationg")
+        self.custom_env_mgr.init(main_package=self.main_package)
+
+        ####################################
         # 执行Controller
         ####################################
-        root_parser = ArgumentParser(prog='PROGRAM')
-        self.add_parses(root_parser)
-        args = root_parser.parse_args()
-        if args.subparser_name == None:
-            logger.info('Sub-command needed!')
-            root_parser.print_help()
-            return
+        self.custom_arg_mgr.init()
+        args = self.custom_arg_mgr.args
         m = importlib.import_module(f'{self.main_package.__name__}.controller.{args.subparser_name}')
         assert issubclass(m.Main, AbstractController)
         m.Main().main()
