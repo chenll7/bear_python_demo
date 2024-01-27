@@ -2,10 +2,7 @@ from abc import ABC, abstractmethod
 import json
 from types import ModuleType
 import importlib
-import subprocess
-import shlex
 import traceback
-import atexit
 
 import colorama
 
@@ -15,10 +12,7 @@ from common_tool.abstract_config import AbstractConfig
 from common_tool.abstract_controller import AbstractController, MyControllerError
 from common_tool.abstract_arg_mgr import AbstractArgMgr, MyArgumentParserError
 from common_tool.abstract_env_mgr import AbstractEnvMgr
-
-
-def run(cmd, *args, **kwargs):
-    subprocess.run(shlex.split(cmd), *args, **kwargs)
+from common_tool.util import run
 
 
 class AbstractEntry(ABC):
