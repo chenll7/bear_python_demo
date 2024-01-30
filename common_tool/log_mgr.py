@@ -13,7 +13,8 @@ class Color(str):
 
 
 class C(tuple):
-    pass
+    def __new__(cls, *args):
+        return super(C, cls).__new__(cls, tuple(args))
 
 
 def _init() -> Logger:
@@ -59,15 +60,13 @@ def log_rule(name="Utitled"):
     # logger = logging.getLogger()
     logger.info(
         C(
-            (
-                Color(Fore.GREEN),
-                "┐\n┌───────────────────────────────────────┘\n│ ",
-                Color(Fore.RED),
-                f"{name}\n",
-                Color(Fore.GREEN),
-                "└──────────────────────────────────────",
-                Color(Fore.RESET),
-            )
+            Color(Fore.GREEN),
+            "┐\n┌───────────────────────────────────────┘\n│ ",
+            Color(Fore.RED),
+            f"{name}\n",
+            Color(Fore.GREEN),
+            "└──────────────────────────────────────",
+            Color(Fore.RESET),
         )
     )
 
@@ -77,12 +76,12 @@ logger = _init()
 
 if __name__ == "__main__":
     # logger = logging.getLogger()
-    logger.info(C((Color(Fore.RED), "1234", Color(Fore.RESET))))
+    logger.info(C(Color(Fore.RED), "1234", Color(Fore.RESET)))
     logger.info("dfdfdf")
     log_rule("Summary")
     d = {"1234": "444"}
     logger.info(f"\n{json.dumps(d)}")
-    logger.info(C(("\n", Color(Fore.YELLOW), json.dumps(d), Color(Fore.RESET))))
+    logger.info(C("\n", Color(Fore.YELLOW), json.dumps(d), Color(Fore.RESET)))
     logger.warning("1234")
     logger.error("3333")
     logger.getChild("huhu").getChild("hihi").info("1234")

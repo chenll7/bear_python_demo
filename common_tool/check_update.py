@@ -74,24 +74,22 @@ def main(*, main_package, custom_config) -> None:
         logger.info(f"Local wheel version: {local_wheel_version_str}")
 
     if local_wheel_version_str == current_version_str:
-        logger.info(C((Color(Fore.GREEN), "No update!", Color(Fore.RESET))))
+        logger.info(C(Color(Fore.GREEN), "No update!", Color(Fore.RESET)))
     else:
         logger.info(
             C(
-                (
-                    Color(Fore.RED),
-                    f"Update found!",
-                    Color(Fore.RESET),
-                    f"\nLocal wheel version is ",
-                    Color(Fore.BLUE),
-                    local_wheel_version_str,
-                    Color(Fore.RESET),
-                    f" ,\nbut current version is ",
-                    Color(Fore.RED),
-                    current_version_str,
-                    Color(Fore.RESET),
-                    f" .\nPlease run install.cmd to reinstall the application.\n",
-                )
+                Color(Fore.RED),
+                f"Update found!",
+                Color(Fore.RESET),
+                f"\nLocal wheel version is ",
+                Color(Fore.BLUE),
+                local_wheel_version_str,
+                Color(Fore.RESET),
+                f" ,\nbut current version is ",
+                Color(Fore.RED),
+                current_version_str,
+                Color(Fore.RESET),
+                f" .\nPlease run install.cmd to reinstall the application.\n",
             )
         )
         raise Exception("Need to update!")
