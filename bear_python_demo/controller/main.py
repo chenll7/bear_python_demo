@@ -20,14 +20,12 @@ class Summary:
         self.elapsed_time = time.time() - self.start_time
         log_rule("Summary")
         logger.info(
-            C(
-                f"\nElapsed time: {self.elapsed_time}s\n",
-                "Main process Ends Gracefully: ",
-                *(
-                    (Color(Fore.GREEN), "Yes", Color(Fore.RESET))
-                    if self.main_process_ends_gracefully
-                    else (Color(Fore.RED), "No", Color(Fore.RESET))
-                ),
+            f"\nElapsed time: {self.elapsed_time}s\n"
+            + "Main process Ends Gracefully: "
+            + (
+                C(Fore.GREEN) + "Yes" + C(Fore.RESET)
+                if self.main_process_ends_gracefully
+                else C(Fore.RED) + "No" + C(Fore.RESET)
             )
         )
 
@@ -55,33 +53,27 @@ class Main(AbstractController):
         ####################################
         log_rule("Main")
         logger.info(
-            C(
-                f"The init time is ",
-                Color(Fore.YELLOW),
-                str(init_time),
-                Color(Fore.RESET),
-                ".",
-            )
+            f"The init time is "
+            + C(Fore.YELLOW)
+            + str(init_time)
+            + C(Fore.RESET)
+            + "."
         )
         logger.info(
-            C(
-                f"The config version is ",
-                Color(Fore.YELLOW),
-                config_version,
-                Color(Fore.RESET),
-                ".",
-            )
+            f"The config version is "
+            + C(Fore.YELLOW)
+            + config_version
+            + C(Fore.RESET)
+            + "."
         )
         logger.info(
-            C(
-                f"The controller name is ",
-                Color(Fore.YELLOW),
-                str(subparser_name),
-                Color(Fore.RESET),
-                ".",
-            )
+            f"The controller name is "
+            + C(Fore.YELLOW)
+            + str(subparser_name)
+            + C(Fore.RESET)
+            + "."
         )
-        logger.info(C(Color(Fore.GREEN), "Hello bear python demo!", Color(Fore.RESET)))
+        logger.info(C(Fore.GREEN) + "Hello bear python demo!" + C(Fore.RESET))
 
     def main(self):
         try:
