@@ -12,13 +12,15 @@ from common_tool.log_mgr import logger, log_rule
 from common_tool.abstract_config_mgr import AbstractConfigMgr, BaseConfig
 from common_tool.abstract_controller import AbstractController, MyControllerError
 from common_tool.abstract_arg_mgr import AbstractArgMgr, MyArgumentParserError
-from common_tool.abstract_env_mgr import AbstractEnvMgr
+from common_tool.abstract_env_mgr import AbstractEnvMgr, BaseEnv
 from common_tool.util import run
 
-T = TypeVar("T", bound=BaseConfig)
+Config = TypeVar("Config", bound=BaseConfig)
+
+Env = TypeVar("Env", bound=BaseEnv)
 
 
-class AbstractEntry(ABC, Generic[T]):
+class AbstractEntry(ABC, Generic[Config, Env]):
     @property
     @abstractmethod
     def main_package(self) -> ModuleType:
@@ -26,7 +28,7 @@ class AbstractEntry(ABC, Generic[T]):
 
     @property
     @abstractmethod
-    def custom_config_mgr(self) -> AbstractConfigMgr[T]:
+    def custom_config_mgr(self) -> AbstractConfigMgr[Config]:
         pass
 
     @property
@@ -36,7 +38,7 @@ class AbstractEntry(ABC, Generic[T]):
 
     @property
     @abstractmethod
-    def custom_env_mgr(self) -> AbstractEnvMgr:
+    def custom_env_mgr(self) -> AbstractEnvMgr[Env]:
         pass
 
     def exit_callback(self, err=None):

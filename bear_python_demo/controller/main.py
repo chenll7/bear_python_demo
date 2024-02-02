@@ -44,7 +44,8 @@ class Main(AbstractController):
         ####################################
         # 读取配置
         ####################################
-        init_time = env_mgr.init_time
+        assert env_mgr.env != None
+        cwd_path = env_mgr.env.cwd_path
         assert config_mgr.config != None
         test_str = config_mgr.config.general.test_str
         test_num = config_mgr.config.general.test_num
@@ -56,39 +57,39 @@ class Main(AbstractController):
         ####################################
         log_rule("Main")
         logger.info(
-            f"The init time is "
+            f"The current working directory paht is "
             + C(Fore.YELLOW)
-            + str(init_time)
+            + cwd_path
             + C(Fore.RESET)
-            + "."
+            + " ."
         )
         logger.info(
             f"The test string is "
-            + C(Fore.YELLOW)
+            + C(Fore.RED)
             + test_str
             + C(Fore.RESET)
-            + "."
+            + " ."
         )
         logger.info(
             f"The test number is "
-            + C(Fore.YELLOW)
+            + C(Fore.CYAN)
             + str(test_num)
             + C(Fore.RESET)
-            + "."
+            + " ."
         )
         logger.info(
             f"The test date is "
-            + C(Fore.YELLOW)
+            + C(Fore.MAGENTA)
             + test_date.isoformat()
             + C(Fore.RESET)
-            + "."
+            + " ."
         )
         logger.info(
             f"The controller name is "
-            + C(Fore.YELLOW)
+            + C(Fore.LIGHTCYAN_EX)
             + str(subparser_name)
             + C(Fore.RESET)
-            + "."
+            + " ."
         )
         logger.info(C(Fore.GREEN) + "Hello bear python demo!" + C(Fore.RESET))
 

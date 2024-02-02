@@ -1,33 +1,49 @@
 from abc import ABC, abstractmethod
 import os
 from os import path
-from typing import cast
+from typing import cast, TypeVar, Generic
+from dataclasses import dataclass
 
 from dotenv import load_dotenv
 
 from common_tool.log_mgr import logger
+from common_tool.util import SimpleJsonable
 
-class AbstractEnvMgr(ABC):
+
+@dataclass
+class BaseEnv(SimpleJsonable):
+    testing_env: str
+    app_name: str
+    app_data_dir_path: str
+
+
+T = TypeVar("T", bound=BaseEnv)
+
+
+class AbstractEnvMgr(ABC, Generic[T]):
     def __init__(self):
-        pass
-
-    @abstractmethod
-    def init_additional(self):
-        pass
+        self.env: T | None = None
 
     def init(self, main_package):
         # 读取环境变量注入配置
         load_dotenv()
 
-        # 获取配置参数
-        self.testing_env: str = os.environ.get("TESTING_ENV", "production")
-        self.app_name: str = (
+        testing_env = os.environ.get("TESTING_ENV", "production")
+        app_name = (
             main_package.__name__ + "-dev"
-            if self.testing_env != "production"
+            if testing_env != "production"
             else main_package.__name__
         )
-        self.app_data_dir_path: str = path.join(
-            cast(str, os.getenv("LOCALAPPDATA")), self.app_name
+        self.env = self.env_factory(
+            {
+                "testing_env": testing_env,
+                "app_name": app_name,
+                "app_data_dir_path": path.join(
+                    cast(str, os.getenv("LOCALAPPDATA")), app_name
+                ),
+            }
         )
 
-        self.init_additional()
+    @abstractmethod
+    def env_factory(self, params_for_base_env) -> T:
+        pass

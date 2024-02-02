@@ -1,16 +1,10 @@
 from abc import ABC, abstractmethod
 import tomllib
-from typing import cast, Optional, Type, Generic, TypeVar, Callable
-from dataclasses import dataclass, field
+from typing import Optional, Type, Generic, TypeVar
+from dataclasses import dataclass
 
 from common_tool.log_mgr import logger
-
-
-class SimpleJsonable:
-    def to_json(self):
-        j = vars(self).copy()
-        return j
-
+from common_tool.util import SimpleJsonable
 
 @dataclass
 class CheckUpdateConfig(SimpleJsonable):
