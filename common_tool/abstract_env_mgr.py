@@ -7,7 +7,6 @@ from dotenv import load_dotenv
 
 from common_tool.log_mgr import logger
 
-
 class AbstractEnvMgr(ABC):
     def __init__(self):
         pass

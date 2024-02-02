@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 import json
 from types import ModuleType
+from typing import TypeVar, Generic
 import importlib
 import traceback
 
@@ -8,14 +9,16 @@ import colorama
 
 from common_tool.check_update import main as check_update
 from common_tool.log_mgr import logger, log_rule
-from common_tool.abstract_config import AbstractConfig
+from common_tool.abstract_config_mgr import AbstractConfigMgr, BaseConfig
 from common_tool.abstract_controller import AbstractController, MyControllerError
 from common_tool.abstract_arg_mgr import AbstractArgMgr, MyArgumentParserError
 from common_tool.abstract_env_mgr import AbstractEnvMgr
 from common_tool.util import run
 
+T = TypeVar("T", bound=BaseConfig)
 
-class AbstractEntry(ABC):
+
+class AbstractEntry(ABC, Generic[T]):
     @property
     @abstractmethod
     def main_package(self) -> ModuleType:
@@ -23,7 +26,7 @@ class AbstractEntry(ABC):
 
     @property
     @abstractmethod
-    def custom_config(self) -> AbstractConfig:
+    def custom_config_mgr(self) -> AbstractConfigMgr[T]:
         pass
 
     @property
@@ -51,29 +54,30 @@ class AbstractEntry(ABC):
         # 初始化配置，仅检查更新部分
         ####################################
         log_rule("Init Configuration For Check Update")
-        self.custom_config.init_for_check_update()
+        self.custom_config_mgr.init_for_check_update()
+        assert self.custom_config_mgr.check_update_config != None
         logger.info(
-            f"\nConfiguration:\n{json.dumps(self.custom_config.to_json(),indent = 2)}\n"
+            f"\nConfiguration:\n{json.dumps(self.custom_config_mgr.check_update_config.to_json(),indent = 2)}\n"
         )
 
         ####################################
         # 检查更新
         ####################################
         log_rule("Check Update")
-        if self.custom_config.check_update.enabled:
-            need_to_update = check_update(
-                main_package=self.main_package, custom_config=self.custom_config
+        if self.custom_config_mgr.check_update_config.check_update.enabled:
+            check_update(
+                main_package=self.main_package,
+                target_dir_path=self.custom_config_mgr.check_update_config.check_update.target_dir_path,
             )
-            if need_to_update:
-                return
 
         ####################################
         # 初始化配置
         ####################################
         log_rule("Initializing Configuration")
-        self.custom_config.init(main_package=self.main_package)
+        self.custom_config_mgr.init()
+        assert self.custom_config_mgr.config != None
         logger.info(
-            f"\nConfiguration:\n{json.dumps(self.custom_config.to_json(), indent = 2)}\n"
+            f"\nConfiguration:\n{json.dumps(self.custom_config_mgr.config.to_json(),indent = 2)}\n"
         )
 
         ####################################

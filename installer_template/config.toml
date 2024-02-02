@@ -1,5 +1,11 @@
+[version]
 version = '1'
 
 [check_update]
 enabled = true
 target_dir_path = '.'
+
+[general]
+test_str = 'Hello bear python demo!'
+test_num = 7777777
+test_date = 2024-02-02

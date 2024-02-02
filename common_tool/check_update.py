@@ -13,18 +13,13 @@ from common_tool.log_mgr import logger, C, Color
 PACKAGE_FOLDER_PATH = "package"
 
 
-def main(*, main_package, custom_config) -> None:
+def main(*, main_package, target_dir_path) -> None:
     ####################################
     # 初始化
     ####################################
     current_version_str = main_package._version.version
     logger.info(f"Current version: {current_version_str}")
     logger.info(f"Package name: {main_package.__name__}")
-
-    ####################################
-    # 读取配置
-    ####################################
-    target_dir_path = custom_config.check_update.target_dir_path
 
     ####################################
     # 找包

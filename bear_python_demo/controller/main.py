@@ -3,7 +3,7 @@ import traceback
 
 from colorama import Fore
 
-from bear_python_demo.helper.config import config
+from bear_python_demo.helper.config_mgr import config_mgr
 from bear_python_demo.helper.env_mgr import env_mgr
 from bear_python_demo.helper.arg_mgr import arg_mgr
 from common_tool.log_mgr import logger, log_rule, C, Color
@@ -45,7 +45,10 @@ class Main(AbstractController):
         # 读取配置
         ####################################
         init_time = env_mgr.init_time
-        config_version = config.config_version
+        assert config_mgr.config != None
+        test_str = config_mgr.config.general.test_str
+        test_num = config_mgr.config.general.test_num
+        test_date = config_mgr.config.general.test_date
         subparser_name = arg_mgr.args.subparser_name
 
         ####################################
@@ -60,9 +63,23 @@ class Main(AbstractController):
             + "."
         )
         logger.info(
-            f"The config version is "
+            f"The test string is "
             + C(Fore.YELLOW)
-            + config_version
+            + test_str
+            + C(Fore.RESET)
+            + "."
+        )
+        logger.info(
+            f"The test number is "
+            + C(Fore.YELLOW)
+            + str(test_num)
+            + C(Fore.RESET)
+            + "."
+        )
+        logger.info(
+            f"The test date is "
+            + C(Fore.YELLOW)
+            + test_date.isoformat()
             + C(Fore.RESET)
             + "."
         )
