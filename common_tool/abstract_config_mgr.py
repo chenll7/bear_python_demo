@@ -6,6 +6,7 @@ from dataclasses import dataclass
 from common_tool.log_mgr import logger
 from common_tool.util import SimpleJsonable
 
+
 @dataclass
 class CheckUpdateConfig(SimpleJsonable):
     @dataclass
@@ -74,7 +75,10 @@ class AbstractConfigMgr(ABC, Generic[T]):
             )
         logger.info(f"Configuration file version is {self.required_config_version}")
         config_version_frag = BaseConfig.Version(config_version)
-        self.config = self.config_factory({"version": config_version_frag})
+        config_general_frag = BaseConfig.General()
+        self.config = self.config_factory(
+            {"version": config_version_frag, "general": config_general_frag}
+        )
 
     @abstractmethod
     def config_factory(self, params_for_config) -> T:
