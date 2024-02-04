@@ -13,8 +13,9 @@ class Env(BaseEnv):
 
 
 class EnvMgr(AbstractEnvMgr[Env]):
-    def env_factory(self, params_for_base_env) -> Env:
-        return Env(cwd_path=os.getcwd(), **params_for_base_env)
+    def env_factory(self, params_for_env) -> Env:
+        params_for_env["cwd_path"] = os.getcwd()
+        return Env(**params_for_env)
 
 
 env_mgr = EnvMgr()

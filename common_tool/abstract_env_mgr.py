@@ -45,5 +45,5 @@ class AbstractEnvMgr(ABC, Generic[T]):
         )
 
     @abstractmethod
-    def env_factory(self, params_for_base_env) -> T:
+    def env_factory(self, params_for_env) -> T:
         pass

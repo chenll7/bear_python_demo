@@ -77,5 +77,5 @@ class AbstractConfigMgr(ABC, Generic[T]):
         self.config = self.config_factory({"version": config_version_frag})
 
     @abstractmethod
-    def config_factory(self, params_for_base_config) -> T:
+    def config_factory(self, params_for_config) -> T:
         pass

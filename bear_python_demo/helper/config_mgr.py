@@ -35,15 +35,13 @@ class ConfigMgr(AbstractConfigMgr[Config]):
     def required_config_version(self) -> str:
         return "1"
 
-    def config_factory(self, params_for_base_config) -> Config:
-        return Config(
-            general=Config.General(
-                test_str=self.config_raw["general"]["test_str"],
-                test_num=self.config_raw["general"]["test_num"],
-                test_date=self.config_raw["general"]["test_date"],
-            ),
-            **params_for_base_config,
+    def config_factory(self, params_for_config) -> Config:
+        params_for_config["general"] = Config.General(
+            test_str=self.config_raw["general"]["test_str"],
+            test_num=self.config_raw["general"]["test_num"],
+            test_date=self.config_raw["general"]["test_date"],
         )
+        return Config(**params_for_config)
 
 
 config_mgr = ConfigMgr()
