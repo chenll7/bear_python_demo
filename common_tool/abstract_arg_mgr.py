@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 from argparse import ArgumentParser
+import argparse
 
 from common_tool.log_mgr import logger
 
@@ -16,7 +17,7 @@ class MyArgumentParser(ArgumentParser):
 
 class AbstractArgMgr(ABC):
     def __init__(self):
-        pass
+        self.args: argparse.Namespace | None = None
 
     @abstractmethod
     def add_parses(self, root_parser: MyArgumentParser) -> None:

@@ -50,6 +50,7 @@ class Main(AbstractController):
         test_str = config_mgr.config.general.test_str
         test_num = config_mgr.config.general.test_num
         test_date = config_mgr.config.general.test_date
+        assert arg_mgr.args != None
         subparser_name = arg_mgr.args.subparser_name
 
         ####################################
@@ -64,18 +65,10 @@ class Main(AbstractController):
             + " ."
         )
         logger.info(
-            f"The test string is "
-            + C(Fore.RED)
-            + test_str
-            + C(Fore.RESET)
-            + " ."
+            f"The test string is " + C(Fore.RED) + test_str + C(Fore.RESET) + " ."
         )
         logger.info(
-            f"The test number is "
-            + C(Fore.CYAN)
-            + str(test_num)
-            + C(Fore.RESET)
-            + " ."
+            f"The test number is " + C(Fore.CYAN) + str(test_num) + C(Fore.RESET) + " ."
         )
         logger.info(
             f"The test date is "
