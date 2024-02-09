@@ -6,7 +6,7 @@ from colorama import Fore
 from bear_python_demo.helper.config_mgr import config_mgr
 from bear_python_demo.helper.env_mgr import env_mgr
 from bear_python_demo.helper.arg_mgr import arg_mgr
-from common_tool.log_mgr import logger, log_rule, C, Color
+from common_tool.log_mgr import logger, log_rule, C
 from common_tool.abstract_controller import AbstractController, MyControllerError
 
 
@@ -57,8 +57,9 @@ class Main(AbstractController):
         # 主流程
         ####################################
         log_rule("Main")
+        logger.debug(f"Debug info!")
         logger.info(
-            f"The current working directory paht is "
+            f"The current working directory path is "
             + C(Fore.YELLOW)
             + cwd_path
             + C(Fore.RESET)

@@ -15,10 +15,6 @@ from colorama import Fore
 # ColoredMsg, ColoredMsg
 
 
-class Color:
-    pass
-
-
 class C(str):
     def __add__(self, operand):
         if isinstance(operand, ColoredMsg):
@@ -87,6 +83,7 @@ def _init() -> Logger:
 
     stream_handler = logging.StreamHandler()
     stream_handler.setFormatter(StreamHandlerFormatter(FMT))
+    stream_handler.setLevel(logging.INFO)
 
     logging.basicConfig(level=logging.DEBUG, handlers=[stream_handler, file_handler])
 
@@ -96,7 +93,6 @@ def _init() -> Logger:
 
 
 def log_rule(name="Utitled"):
-    # logger = logging.getLogger()
     logger.info(
         C(Fore.GREEN)
         + "┐\n┌───────────────────────────────────────┘\n│ "
