@@ -8,7 +8,7 @@ import traceback
 import colorama
 
 from common_tool.check_update import main as check_update
-from common_tool.log_mgr import logger, log_rule
+from common_tool.log_mgr import logger, log_rule, C
 from common_tool.abstract_config_mgr import AbstractConfigMgr, BaseConfig
 from common_tool.abstract_controller import AbstractController, MyControllerError
 from common_tool.abstract_arg_mgr import AbstractArgMgr, MyArgumentParserError

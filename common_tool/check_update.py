@@ -8,7 +8,7 @@ from packaging import version
 
 from colorama import Fore
 
-from common_tool.log_mgr import logger, C
+from common_tool.log_mgr import logger, log_rule, C
 
 PACKAGE_FOLDER_PATH = "package"
 

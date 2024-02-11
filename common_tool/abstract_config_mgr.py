@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 import tomllib
-from typing import Optional, Type, Generic, TypeVar
+from typing import Generic, TypeVar
 from dataclasses import dataclass
 
 from common_tool.log_mgr import logger

@@ -6,7 +6,7 @@ from dataclasses import dataclass
 
 from dotenv import load_dotenv
 
-from common_tool.log_mgr import logger
+from common_tool.log_mgr import logger, log_rule, C
 from common_tool.util import SimpleJsonable
 
 
