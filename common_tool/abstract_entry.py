@@ -21,6 +21,10 @@ Env = TypeVar("Env", bound=BaseEnv)
 
 
 class AbstractEntry(ABC, Generic[Config, Env]):
+
+    def __init__(self):
+        self.controller_name = None
+
     @property
     @abstractmethod
     def main_package(self) -> ModuleType:
@@ -41,7 +45,7 @@ class AbstractEntry(ABC, Generic[Config, Env]):
     def custom_env_mgr(self) -> AbstractEnvMgr[Env]:
         pass
 
-    def exit_callback(self, err=None):
+    def exit_callback(self, controller_name, err=None):
         if err and type(err) not in [MyArgumentParserError, MyControllerError]:
             logger.error(traceback.format_exc())
         run("pause", shell=True)
@@ -93,7 +97,9 @@ class AbstractEntry(ABC, Generic[Config, Env]):
         ####################################
         log_rule("Initializing Argument Parser")
         self.custom_arg_mgr.init()
+        assert self.custom_arg_mgr.args != None
         args = self.custom_arg_mgr.args
+        self.controller_name = args.subparser_name
 
         ####################################
         # 执行Controller
@@ -108,6 +114,6 @@ class AbstractEntry(ABC, Generic[Config, Env]):
         try:
             self._main()
         except Exception as err:
-            self.exit_callback(err)
+            self.exit_callback(self.controller_name, err)
         else:
-            self.exit_callback()
+            self.exit_callback(self.controller_name)
