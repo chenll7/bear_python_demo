@@ -43,7 +43,7 @@ print("Creating the installer folder is done.\n")
 
 print("Packaging the installer...")
 print(installer_path)
-shutil.make_archive(installer_path, 'zip', installer_dir_path)
+shutil.make_archive(str(installer_path), 'zip', installer_dir_path)
 print("Packaging the installer is done.\n")
 
 print("Creating the updater...")

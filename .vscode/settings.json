@@ -4,5 +4,9 @@
     },
     "files.exclude": {
         "**/__pycache__": true
-    }
+    },
+    "python.analysis.diagnosticMode": "workspace",
+    "python.analysis.exclude": [
+        "build/"
+    ]
 }
