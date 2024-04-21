@@ -6,4 +6,4 @@ if not exist "venv/Scripts/python.exe" (
     exit
 )
 
-call "venv/Scripts/python" -m bear_python_demo.entry main
+call "venv/Scripts/python" -m program.main.entry main

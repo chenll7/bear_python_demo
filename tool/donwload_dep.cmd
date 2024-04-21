@@ -1,3 +1,3 @@
 @echo off
 
-call "venv/Scripts/python" "%~dp0\helper\donwload_dep.py"
+call "venv/Scripts/python" -m program.dev_tool.donwload_dep

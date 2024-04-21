@@ -3,11 +3,12 @@ import traceback
 
 from colorama import Fore
 
-from bear_python_demo.helper.config_mgr import config_mgr
-from bear_python_demo.helper.env_mgr import env_mgr
-from bear_python_demo.helper.arg_mgr import arg_mgr
-from common_tool.log_mgr import logger, log_rule, C
-from common_tool.abstract_controller import AbstractController, MyControllerError
+from program.common_tool.log_mgr import logger, log_rule, C
+from program.common_tool.abstract_controller import (
+    AbstractController,
+    MyControllerError,
+)
+from program.main.helper.option_mgr import option_mgr
 
 
 class Summary:
@@ -44,14 +45,16 @@ class Main(AbstractController):
         ####################################
         # 读取配置
         ####################################
-        assert env_mgr.env != None
-        cwd_path = env_mgr.env.cwd_path
-        assert config_mgr.config != None
-        test_str = config_mgr.config.general.test_str
-        test_num = config_mgr.config.general.test_num
-        test_date = config_mgr.config.general.test_date
-        assert arg_mgr.args != None
-        subparser_name = arg_mgr.args.subparser_name
+        assert option_mgr.config != None
+        test_str = option_mgr.config['general']['test_str']
+        test_num = option_mgr.config['general']['test_num']
+        test_date = option_mgr.config['general']['test_date']
+
+        assert option_mgr.env != None
+        cwd_path = option_mgr.env['cwd_path']
+
+        assert option_mgr.args != None
+        subparser_name = option_mgr.args.subparser_name
 
         ####################################
         # 主流程

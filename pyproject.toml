@@ -1,18 +1,18 @@
 [build-system]
-requires = ["setuptools>=61.0", "setuptools_scm>=8.0"]
+requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools_scm]
-write_to = "bear_python_demo/_version.py"
+write_to = "program/_version.py"
 local_scheme = "node-and-timestamp"
 
 [tool.setuptools.packages.find]
-include = ["bear_python_demo", "common_tool"]
+include = ["program"]
 exclude = ["*/__pycache__/*"]
 
 [project]
 name = "bear_python_demo"
-dynamic = ['version']
+version = "1.0.0"
 authors = [
   { name="Chen Bear", email="chenll7@outlook.com" },
 ]
@@ -26,9 +26,5 @@ classifiers = [
 ]
 dependencies = [
   'packaging >= 23.2',
-  'colorama >= 0.4.6',
-  'python-dotenv >= 1.0.0'
+  'colorama >= 0.4.6'
 ]
-
-[project.scripts]
-bear_python_demo = "bear_python_demo.main:main"

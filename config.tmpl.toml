@@ -1,9 +1,8 @@
 [version]
 version = '1'
 
-[check_update]
-enabled = true
-target_dir_path = '.'
+[testing_env]
+testing_env = 'development'
 
 [general]
 test_str = 'Hello bear python demo!'

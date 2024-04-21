@@ -1,3 +1,3 @@
 @echo off
 
-call py "%~dp0\helper\install_venv.py"
+call py -m program.dev_tool.install_venv
