@@ -2,10 +2,6 @@
 requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
-[tool.setuptools_scm]
-write_to = "program/_version.py"
-local_scheme = "node-and-timestamp"
-
 [tool.setuptools.packages.find]
 include = ["program"]
 exclude = ["*/__pycache__/*"]
